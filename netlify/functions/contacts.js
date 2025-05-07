@@ -49,6 +49,8 @@ exports.handler = async function(event, context) {
             console.error('POST: Invalid JSON', e);
             return { statusCode: 400, body: 'Invalid JSON' };
         }
+        // Remove id if null/undefined (let Prisma generate it)
+        if (data.id == null) delete data.id;
         try {
             const contact = await prisma.contact.create({ data });
             console.log('Contact created:', contact);
