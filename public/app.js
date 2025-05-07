@@ -8,7 +8,7 @@ const App = {
         const contacts = ref([]);
         const showAddForm = ref(false);
         const loginForm = reactive({ password: localStorage.getItem('password') || '' });
-        const contactForm = reactive({ id: null, name: '', birthday: '', birthYear: '', mobile: '', greetingMessage: '' });
+        const contactForm = reactive({ id: null, name: '', birthday: '', birthYear: '', mobileNumber: '', greetingMessage: '' });
         const uiState = reactive({ loginMessage: '', formMessage: '' });
 
         // --- Auth ---
@@ -82,16 +82,18 @@ const App = {
         const editContact = (contact) => {
             Object.assign(contactForm, contact);
             showAddForm.value = true;
+            uiState.formMessage = '';
         };
         const deleteContact = async (id) => {
             if (!isLoggedIn.value) return;
             if (!confirm('Eliminare questo contatto?')) return;
             try {
+                const password = localStorage.getItem('password') || loginForm.password;
                 const res = await fetch('/.netlify/functions/contacts', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${loginForm.password}`
+                        'Authorization': `Bearer ${password}`
                     },
                     body: JSON.stringify({ id })
                 });
@@ -100,7 +102,7 @@ const App = {
         };
         const closeForm = () => {
             showAddForm.value = false;
-            Object.assign(contactForm, { id: null, name: '', birthday: '', birthYear: '', mobile: '', greetingMessage: '' });
+            Object.assign(contactForm, { id: null, name: '', birthday: '', birthYear: '', mobileNumber: '', greetingMessage: '' });
             uiState.formMessage = '';
         };
 
@@ -127,3 +129,4 @@ const App = {
 };
 
 createApp(App).mount('#app');
+

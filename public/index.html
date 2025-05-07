@@ -30,7 +30,7 @@
                     <li v-for="contact in contacts" :key="contact.id" class="contact-item">
                         <h3>{{ contact.name }}</h3>
                         <div><b>Compleanno:</b> {{ contact.birthday }}<span v-if="contact.birthYear">/{{ contact.birthYear }}</span></div>
-                        <div v-if="contact.mobile"><b>Telefono:</b> {{ contact.mobile }}</div>
+                        <div v-if="contact.mobileNumber"><b>Telefono:</b> {{ contact.mobileNumber }}</div>
                         <div><b>Messaggio:</b> {{ contact.greetingMessage }}</div>
                         <button @click="editContact(contact)">Modifica</button>
                         <button @click="deleteContact(contact.id)">Elimina</button>
@@ -44,7 +44,7 @@
                     <input v-model="contactForm.name" type="text" placeholder="Nome" required>
                     <input v-model="contactForm.birthday" type="text" placeholder="Compleanno (GG/MM)" required>
                     <input v-model="contactForm.birthYear" type="number" placeholder="Anno di nascita (opzionale)">
-                    <input v-model="contactForm.mobile" type="text" placeholder="Telefono (opzionale)">
+                    <input v-model="contactForm.mobileNumber" type="text" placeholder="Telefono (opzionale)">
                     <input v-model="contactForm.greetingMessage" type="text" placeholder="Messaggio di auguri" required>
                     <button type="submit">Salva</button>
                     <button type="button" @click="closeForm">Annulla</button>
