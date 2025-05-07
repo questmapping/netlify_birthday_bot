@@ -63,3 +63,32 @@ After creating a Netlify account, you can deploy the application by following th
 2.  Click on "New site from Git".
 3.  Select the repository you cloned the application to.
 4.  Follow the prompts to deploy the application.
+
+---
+## Known Issues
+
+### Scheduled Functions and @netlify/plugin-schedule
+
+**Note:** The `@netlify/plugin-schedule` plugin is not available on npm and cannot be installed locally. This means:
+- You must comment out or remove the `[[plugins]]` block for `@netlify/plugin-schedule` in your `netlify.toml` to run `netlify dev` locally.
+- You can still manually test your scheduled function locally using:
+  ```sh
+  netlify functions:invoke birthday-checker --no-identity
+  ```
+- For production deployments, you should enable the plugin in the Netlify App UI (see below).
+
+### How to Enable Scheduled Functions in Netlify App UI
+1. Deploy your site to Netlify.
+2. Go to your site dashboard at [https://app.netlify.com/sites](https://app.netlify.com/sites).
+3. Select your site.
+4. In the left sidebar, click on **Plugins**.
+5. Click **Go to the Netlify Plugin directory** and search for `Schedule Functions`.
+6. Click **Install plugin** and follow the prompts to enable scheduled functions for your site.
+7. Configure the schedule for your function as needed (e.g., set `birthday-checker` to run daily at 10:00 AM CET).
+
+### .prisma folder
+if you get an error while running `netlify dev`, try deleting the .prisma folder inside the node_modules folder (not the one inside @prisma/client) and running `npx prisma generate`.
+
+### functions-internal and functions-serve folders
+if you get an error while running `netlify dev`, try deleting the functions-internal and functions-serve folders inside the .netlify folder and running `netlify dev` again.
+---
