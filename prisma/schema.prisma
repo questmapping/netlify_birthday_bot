@@ -5,7 +5,7 @@ generator client {
   // It's good to include "native" for local development.
   // Check Netlify's current Lambda environment if issues arise.
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
-  output        = "../generated/prisma"
+  // output        = "../generated/prisma"
 }
 
 datasource db {
