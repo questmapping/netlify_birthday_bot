@@ -9,12 +9,6 @@
 [dev]
   functions = "netlify/functions"
 
-# [[plugins]]
-#   package = "@netlify/plugin-schedule"
-#
-#   [plugins.inputs]
-#     functions = [
-#       { path = "birthday-checker", schedule = "0 10 * * *" }
-#     ]
-#
-# NOTE: The @netlify/plugin-schedule is not available on npm and cannot be installed locally. Uncomment this block ONLY for production deployment, not for local dev.
+[functions."birthday-checker"]
+  schedule = "0 10 * * *"
+# This will schedule the birthday-checker function to run every day at 10:00 AM UTC (adjust for your timezone as needed).
