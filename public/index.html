@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubrica Compleanni</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <!-- Login Screen -->
+        <section v-if="!isLoggedIn" id="login-screen" class="app-section">
+            <h2>Accesso Amministrazione</h2>
+            <form @submit.prevent="handleLogin" class="styled-form">
+                <input v-model="loginForm.password" type="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+                <div class="form-message">{{ uiState.loginMessage }}</div>
+            </form>
+        </section>
+        <!-- Main App Content -->
+        <main v-else id="app-content">
+            <header class="app-header">
+                <h1>Rubrica Compleanni</h1>
+                <button @click="handleLogout" class="logout-button">Logout</button>
+            </header>
+            <section class="app-section">
+                <h2>Contatti</h2>
+                <ul class="contact-list">
+                    <li v-for="contact in contacts" :key="contact.id" class="contact-item">
+                        <h3>{{ contact.name }}</h3>
+                        <div><b>Compleanno:</b> {{ contact.birthday }}<span v-if="contact.birthYear">/{{ contact.birthYear }}</span></div>
+                        <div v-if="contact.mobile"><b>Telefono:</b> {{ contact.mobile }}</div>
+                        <div><b>Messaggio:</b> {{ contact.greetingMessage }}</div>
+                        <button @click="editContact(contact)">Modifica</button>
+                        <button @click="deleteContact(contact.id)">Elimina</button>
+                    </li>
+                </ul>
+                <button @click="showAddForm = true">Aggiungi Contatto</button>
+            </section>
+            <!-- Add/Edit Contact Modal -->
+            <div v-if="showAddForm" class="modal">
+                <form @submit.prevent="saveContact" class="styled-form">
+                    <input v-model="contactForm.name" type="text" placeholder="Nome" required>
+                    <input v-model="contactForm.birthday" type="text" placeholder="Compleanno (GG/MM)" required>
+                    <input v-model="contactForm.birthYear" type="number" placeholder="Anno di nascita (opzionale)">
+                    <input v-model="contactForm.mobile" type="text" placeholder="Telefono (opzionale)">
+                    <input v-model="contactForm.greetingMessage" type="text" placeholder="Messaggio di auguri" required>
+                    <button type="submit">Salva</button>
+                    <button type="button" @click="closeForm">Annulla</button>
+                    <div class="form-message">{{ uiState.formMessage }}</div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

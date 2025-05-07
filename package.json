@@ -1,0 +1,20 @@
+{
+  "name": "netlify_birthday_bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx prisma generate",
+    "dev": "netlify dev"
+  },
+  "keywords": ["netlify", "prisma", "vue", "birthday"],
+  "author": "Your Name",
+  "license": "ISC",
+  "description": "Birthday reminder app on Netlify",
+  "devDependencies": {
+    "prisma": "^6.7.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "axios": "^1.9.0"
+  }
+}

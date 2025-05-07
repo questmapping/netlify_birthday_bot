@@ -1,0 +1,7 @@
+node_modules/
+.env
+netlify/state.json # Netlify Dev state file
+netlify/.netlify # Netlify Dev build cache
+dist/ # If you have a frontend build step outputting to dist
+# Local Netlify folder
+.netlify

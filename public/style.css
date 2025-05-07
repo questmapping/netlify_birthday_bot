@@ -1,0 +1,136 @@
+/* public/style.css */
+:root {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --primary-color: #90caf9;
+    --accent-color: #f48fb1;
+    --text-color: #e0e0e0;
+    --error-color: #ef5350;
+    --success-color: #66bb6a;
+    --border-radius: 8px;
+    --transition: 0.2s;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+[v-cloak] { display: none; }
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface-color);
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    margin: 0 0 0.5em 0;
+}
+
+.app-section {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.styled-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.styled-form input {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    background: #232323;
+    color: var(--text-color);
+}
+
+.styled-form button {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--primary-color);
+    color: #222;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.styled-form button[type="button"] {
+    background: var(--accent-color);
+}
+
+.styled-form button:hover {
+    background: var(--accent-color);
+}
+
+.form-message {
+    min-height: 1.25em;
+    color: var(--error-color);
+    font-size: 0.95rem;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-item {
+    background: #232323;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+.contact-item h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+.contact-item button {
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.logout-button {
+    background: var(--error-color);
+    color: #fff;
+    margin-left: 1rem;
+}
+
+.modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal .styled-form {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    min-width: 320px;
+}

@@ -1,0 +1,26 @@
+// prisma/schema.prisma
+generator client {
+  provider      = "prisma-client-js"
+  // Ensure binaryTargets are appropriate for Netlify's Lambda environment (Node.js 20.x usually rhel-openssl-3.0.x)
+  // It's good to include "native" for local development.
+  // Check Netlify's current Lambda environment if issues arise.
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  output        = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql" // For Neon
+  url      = env("DATABASE_URL")
+  // Neon connection strings usually include ?sslmode=require, Prisma client handles this.
+}
+
+model Contact {
+  id              String   @id @default(cuid()) // cuid() is a good default for unique IDs
+  name            String
+  birthday        String // Storing as "DD/MM" string as requested
+  birthYear       Int? // Optional integer for birth year
+  mobileNumber    String? // Optional string for mobile number
+  greetingMessage String // Required string for the birthday greeting
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
