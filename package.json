@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "echo \"No frontend build step, Prisma generate runs on postinstall\"",
+    "build": "prisma generate && echo \"No frontend build step, Prisma generate runs on postinstall\"", 
     "postinstall": "npx prisma generate",
     "dev": "netlify dev"
   },
