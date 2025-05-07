@@ -51,6 +51,16 @@ exports.handler = async function(event, context) {
         }
         // Remove id if null/undefined (let Prisma generate it)
         if (data.id == null) delete data.id;
+        // Map mobile -> mobileNumber for Prisma
+        if ('mobile' in data) {
+            data.mobileNumber = data.mobile;
+            delete data.mobile;
+        }
+        // Only allow fields defined in schema
+        const allowedFields = ['name', 'birthday', 'birthYear', 'mobileNumber', 'greetingMessage'];
+        data = Object.fromEntries(Object.entries(data).filter(([k]) => allowedFields.includes(k)));
+        // Type corrections
+        if (typeof data.birthYear === 'string') data.birthYear = parseInt(data.birthYear, 10);
         try {
             const contact = await prisma.contact.create({ data });
             console.log('Contact created:', contact);
@@ -73,6 +83,11 @@ exports.handler = async function(event, context) {
         if (!data.id) {
             console.error('PUT: ID required');
             return { statusCode: 400, body: 'ID required' };
+        }
+        // Map mobile -> mobileNumber for Prisma
+        if ('mobile' in data) {
+            data.mobileNumber = data.mobile;
+            delete data.mobile;
         }
         try {
             const updated = await prisma.contact.update({ where: { id: data.id }, data });
