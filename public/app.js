@@ -7,7 +7,7 @@ const App = {
         const isLoggedIn = ref(localStorage.getItem('isLoggedIn') === 'true');
         const contacts = ref([]);
         const showAddForm = ref(false);
-        const loginForm = reactive({ password: '' });
+        const loginForm = reactive({ password: localStorage.getItem('password') || '' });
         const contactForm = reactive({ id: null, name: '', birthday: '', birthYear: '', mobile: '', greetingMessage: '' });
         const uiState = reactive({ loginMessage: '', formMessage: '' });
 
@@ -24,6 +24,7 @@ const App = {
                 if (res.ok && data.success) {
                     isLoggedIn.value = true;
                     localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('password', loginForm.password);
                     await fetchContacts();
                 } else {
                     uiState.loginMessage = data.error || 'Login fallito';
@@ -35,14 +36,16 @@ const App = {
         const handleLogout = () => {
             isLoggedIn.value = false;
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('password');
         };
 
         // --- CRUD ---
         const fetchContacts = async () => {
             if (!isLoggedIn.value) return;
             try {
+                const password = localStorage.getItem('password') || loginForm.password;
                 const res = await fetch('/.netlify/functions/contacts', {
-                    headers: { 'Authorization': `Bearer ${loginForm.password}` }
+                    headers: { 'Authorization': `Bearer ${password}` }
                 });
                 contacts.value = await res.json();
             } catch (e) {
@@ -57,11 +60,12 @@ const App = {
             }
             try {
                 const method = contactForm.id ? 'PUT' : 'POST';
+                const password = localStorage.getItem('password');
                 const res = await fetch('/.netlify/functions/contacts', {
                     method,
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${loginForm.password}`
+                        'Authorization': `Bearer ${password}`
                     },
                     body: JSON.stringify(contactForm)
                 });
